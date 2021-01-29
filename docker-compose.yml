@@ -1,0 +1,23 @@
+version: '3.7'
+
+services:
+  mongodb:
+        image: mongo:4.2.8
+        container_name: mongodb
+        volumes:
+          - ./database_data:/data/db
+        restart: always
+        ports:
+          - "27017:27017"
+
+  webserver:
+    container_name: php7.4
+    build:
+      context: ./
+    volumes:
+      - ./www:/var/www/html
+    ports:
+      - 8080:80
+      - 4443:443
+    depends_on:
+      - mongodb
